@@ -22,10 +22,12 @@ type complex = record re, im: real; end;
 ## разработка грамматики:
 
 ```
-Z → "type" ID "=" "record" FIELD_LIST "end" ";"
-FIELD_LIST → ( FIELD_DEF ";" )* FIELD_DEF
+Z        → "type" ID "=" "record" FIELD_LIST "end" ";"
+FIELD_LIST → FIELD_DEF FIELD_LIST_TAIL
+FIELD_LIST_TAIL → ";" FIELD_DEF FIELD_LIST_TAIL | ε
 FIELD_DEF → ID_LIST ":" TYPE_NAME
-ID_LIST → ID ( "," ID )*
+ID_LIST → ID ID_LIST_TAIL
+ID_LIST_TAIL → "," ID ID_LIST_TAIL | ε
 TYPE_NAME → "real" | "integer" | "string"
 
 ```
